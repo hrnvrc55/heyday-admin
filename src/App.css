@@ -1,0 +1,30 @@
+@import '~antd/dist/antd.css';
+@import 'bootstrap/dist/css/bootstrap.css';
+
+body, #root, .App, .ant-layout-has-sider{
+  height: 100vh;
+  overflow: auto;
+}
+
+.logo{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 64px;
+}
+
+.ant-layout-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-icon{
+  margin-right: 2%;
+  cursor: pointer;
+}
+
+.menu-item{
+  text-decoration: none;
+}
+
