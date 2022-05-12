@@ -3,7 +3,7 @@ import axios from 'axios';
 import cogoToast from 'cogo-toast';
 
 export const ApiContext = React.createContext({})
-axios.defaults.baseURL='http://localhost:8085/api';
+axios.defaults.baseURL=process.env.REACT_APP_API_URL;
 axios.defaults.headers.common.Authorization = null
 axios.defaults.headers.common['Content-Type'] = 'application/json';
 
