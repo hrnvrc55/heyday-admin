@@ -101,7 +101,7 @@ export default function SlidersPage(){
 
     const deleteRow = async (id) => {
         setLoading(true);
-        await axios.get(`/slider/delete/${id}`).then(resp => {
+        await axios.delete(`/slider/delete/${id}`).then(resp => {
             getSliders();
         }).finally(() => setLoading(false))
     }
