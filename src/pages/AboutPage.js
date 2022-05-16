@@ -223,6 +223,7 @@ export default function AboutPage(){
                                 label="Image"
                                 labelCol={{span: 24}}
                                 name="ownerAvatar"
+                                style={{display: 'none'}}
                                 // rules={[{ required: true, message: 'Please upload owner image!' }]}
                             >
                                 <Upload
