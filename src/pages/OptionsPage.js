@@ -5,7 +5,7 @@ import LayoutComp from "../components/Layout";
 import ImgCrop from "antd-img-crop";
 import axios from "axios";
 import cogoToast from 'cogo-toast';
-import { Card } from 'antd';
+import { Card, Alert } from 'antd';
 
 
 function getBase64(img, callback) {
@@ -132,6 +132,7 @@ class OptionsPage extends React.Component {
                             <Card title="Logo" cover={<img alt="example" src={this.state.currentLogo} />}>
                                 <div className="mb-3">
                                     <label>Upload New Logo</label>
+                                    <Alert className="my-2" showIcon type="info" message="Please Upload new image and after click 'Save Logo' button" />
                                     <ImgCrop aspect={423/107}>
                                         <Upload
                                             name="avatar"

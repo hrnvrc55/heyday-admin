@@ -1,6 +1,21 @@
 import React, {useEffect, useState} from "react";
 import LayoutComp from "../components/Layout";
-import {Table, Tag, Space, Spin, Button, Modal, Form, Input, Drawer, Upload, DatePicker, Popconfirm, Badge} from 'antd';
+import {
+    Table,
+    Tag,
+    Space,
+    Spin,
+    Button,
+    Modal,
+    Form,
+    Input,
+    Drawer,
+    Upload,
+    DatePicker,
+    Popconfirm,
+    Badge,
+    Alert
+} from 'antd';
 import {PlusCircleOutlined, InboxOutlined, DeleteOutlined, EditOutlined} from "@ant-design/icons";
 import axios from "axios";
 import ImgCrop from 'antd-img-crop';
@@ -209,6 +224,9 @@ export default function WorksPage(){
                 <div>
                     {selectedWorkForDrawer && (
                         <>
+                            <div className="mb-2">
+                                <Alert showIcon type="info" message="Please select main image after uploaded work images." />
+                            </div>
                             <div>
                                 <h3>{selectedWorkForDrawer.title} Images</h3>
                             </div>

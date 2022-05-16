@@ -1,12 +1,13 @@
 import { Button } from 'antd';
 import React from "react";
-import { Layout, Menu, Dropdown } from 'antd';
+import { Layout, Menu, Dropdown, Space } from 'antd';
 import {
     MenuUnfoldOutlined,
     MenuFoldOutlined,
     UserOutlined,
     VideoCameraOutlined,
     UploadOutlined,
+    RightCircleOutlined
 } from '@ant-design/icons';
 import {useState} from "react";
 import {adminMenu} from "../constants/menu";
@@ -20,20 +21,10 @@ const { Header, Sider, Content } = Layout;
 
 function LayoutComp(props) {
     const [collapsed, setCollapsed] = useState(false);
-    const {setUser} = React.useContext(ApiContext);
+    const {setUser,user} = React.useContext(ApiContext);
 
     const menu = (
         <Menu>
-            <Menu.Item>
-                <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="menu-item"
-                    role="button"
-                >
-                    Profile
-                </a>
-            </Menu.Item>
             <Menu.Item>
                 <a
                     target="_blank"
@@ -69,13 +60,20 @@ function LayoutComp(props) {
                                 <Link to={item.url}>{item.name}</Link>
                             </Menu.Item>
                         ))}
+                        <Menu.Item className="bg-success"  key={"web-site-link"} icon={<RightCircleOutlined />}>
+                            <a href="https://heyday.teksenbilisim.com" target="_blank">Go Website</a>
+                        </Menu.Item>
                     </Menu>
                 </Sider>
                 <Layout className="site-layout">
                     <Header className="site-layout-background" style={{ padding: 0 }}>
                         {collapsed ? <MenuUnfoldOutlined size={25} className="text-white" onClick={() => toggle()}/> : <MenuFoldOutlined size={25} className="text-white" onClick={() => toggle()}/> }
                         <Dropdown className="user-icon" overlay={menu} placement="bottom" arrow>
-                            <UserOutlined className="text-white" size={25} />
+                                <Space>
+                                    <UserOutlined className="text-white" size={25} />
+                                    <span className="text-white">{user && user.fullName}</span>
+
+                                </Space>
                         </Dropdown>
                     </Header>
                     <Content
