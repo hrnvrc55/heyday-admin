@@ -51,7 +51,7 @@ export default function AboutPage(){
     }
 
     async function onGeneralFinish(values){
-        if(general.id) values.id = general.id;
+        if(general) values.id = general.id;
         setLoading(true);
         await axios.post('/about/general/save',values).then(resp => {
             setLoading(false);
