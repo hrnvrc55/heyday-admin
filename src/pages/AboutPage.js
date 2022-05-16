@@ -65,7 +65,7 @@ export default function AboutPage(){
 
     async function onOwnerFinish(values){
         setLoading(true);
-        if(owner.id) values.id =  owner.id;
+        if(owner) values.id =  owner.id;
         await axios.post('/about/owner/save',values).then(resp => {
             reloadPage()
         }).finally(() => setLoading(false));
