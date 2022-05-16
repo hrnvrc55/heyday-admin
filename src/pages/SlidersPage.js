@@ -52,7 +52,7 @@ export default function SlidersPage(){
             render: (text, record) => (
                 <>
 
-                    <Button className="m-lg-2 btn-success" type="default"  icon={<EditOutlined />} />
+                    {/*<Button className="m-lg-2 btn-success" type="default"  icon={<EditOutlined />} />*/}
 
                     <Popconfirm
                         title="Are you sure to delete this row?"
@@ -100,7 +100,10 @@ export default function SlidersPage(){
     }
 
     const deleteRow = async (id) => {
-
+        setLoading(true);
+        await axios.get(`/slider/delete/${id}`).then(resp => {
+            getSliders();
+        }).finally(() => setLoading(false))
     }
 
     const handleChange = info => {
