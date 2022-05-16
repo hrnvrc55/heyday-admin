@@ -213,7 +213,8 @@ export default function AboutPage(){
                             name="basic"
                             initialValues={{
                                 name: owner?.name || '',
-                                description: owner?.description || ''
+                                description: owner?.description || '',
+                                image: ' '
                             }}
                             onFinish={onOwnerFinish}
                             onFinishFailed={onOwnerFinishFinishFailed}
@@ -222,7 +223,7 @@ export default function AboutPage(){
                             <Form.Item
                                 label="Image"
                                 labelCol={{span: 24}}
-                                name="ownerAvatar"
+                                name="image"
                                 style={{display: 'none'}}
                                 // rules={[{ required: true, message: 'Please upload owner image!' }]}
                             >
