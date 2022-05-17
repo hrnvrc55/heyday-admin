@@ -27,6 +27,8 @@ const { Dragger } = Upload;
 
 
 export default function WorksPage(){
+    const [form] = Form.useForm();
+
     const columns = [
         {
             title: 'Title',
@@ -48,7 +50,11 @@ export default function WorksPage(){
                         setIsDrawerVisible(true)
                         setSelectedWorkForDrawer(record);
                     }}>Images</Button>
-                    <Button className="m-lg-2 btn-success" type="default"  icon={<EditOutlined />} />
+                    <Button className="m-lg-2 btn-success" type="default" onClick={() => {
+                        setIsModalVisible(true);
+                        setSelectedWork(record);
+                        form.setFieldsValue({title: record.title, subTitle: record.subTitle})
+                    }}  icon={<EditOutlined />} />
 
                     <Popconfirm
                         title="Are you sure to delete this row?"
@@ -71,6 +77,7 @@ export default function WorksPage(){
     const [selectedWorkForDrawer, setSelectedWorkForDrawer] = useState(null);
     const [fileList, setFileList] = useState([]);
     const [selectedImage, setSelectedImage] = useState({id: null, src: ""});
+    const [selectedWork, setSelectedWork] = useState({});
 
     useEffect(() => {
         load()
@@ -144,13 +151,25 @@ export default function WorksPage(){
     }
 
     const onFinish = async (values) => {
-        setLoading(true);
-        await axios.post('/work/save',values).then(resp => {
-            load()
-            setIsModalVisible(false);
-        }).finally(() => {
-            setLoading(false);
-        })
+        if(selectedWork && selectedWork.id){
+            setLoading(true);
+            values.id = selectedWork.id
+            await axios.put('/work/update',values).then(resp => {
+                load()
+                setIsModalVisible(false);
+            }).finally(() => {
+                setLoading(false);
+            })
+        }else{
+            setLoading(true);
+            await axios.post('/work/save',values).then(resp => {
+                load()
+                setIsModalVisible(false);
+            }).finally(() => {
+                setLoading(false);
+            })
+        }
+
     }
     const onFinishFailed = () => {
 
@@ -166,7 +185,24 @@ export default function WorksPage(){
     }
 
     const onRemove = async (file) => {
-        console.log(file, 'file')
+        const {confirm} = Modal
+        return new Promise((resolve, reject) => {
+            confirm({
+                title: 'Are you sure you want to Delete ?',
+                onOk: () => {
+                    resolve(true)
+                    setLoading(true);
+                    axios.delete(`/work/delete-image/${file.id}`).then(resp => {
+                        getWorkImages(selectedWorkForDrawer.id);
+                    }).finally(() => setLoading(false))
+                },
+                onCancel: () =>{
+                    reject(false)
+                }
+            })
+        })
+
+
     }
 
     const onSelectCoverImage = async (id, workId) => {
@@ -186,39 +222,48 @@ export default function WorksPage(){
                 <Button onClick={() => setIsModalVisible(true)} icon={<PlusCircleOutlined />}>Add Work</Button>
             </div>
             <Table rowKey="id" loading={loading} columns={columns} dataSource={works} />
-            <Modal title="New Work" visible={isModalVisible} footer={false} onCancel={() => handleCancel()}>
-                <Form
-                    name="basic"
-                    initialValues={{ title: '' }}
-                    onFinish={onFinish}
-                    onFinishFailed={onFinishFailed}
-                    autoComplete="off"
-                >
-                    <Form.Item
-                        label="Title"
-                        labelCol={{span: 24}}
-                        name="title"
-                        rules={[{ required: true, message: 'Please input title!' }]}
+            <Modal title="New Work" visible={isModalVisible} footer={false} onCancel={() => {
+                handleCancel();
+                setSelectedWork({});
+            }}>
+                {isModalVisible && (
+                    <Form
+                        name="basic"
+                        form={form}
+                        initialValues={{
+                            title: selectedWork ? selectedWork.title : '',
+                            subTitle: selectedWork ? selectedWork.subTitle: ''
+                        }}
+                        onFinish={onFinish}
+                        onFinishFailed={onFinishFailed}
+                        autoComplete="off"
                     >
-                        <Input />
-                    </Form.Item>
-                    <Form.Item
-                        label="Sub Title"
-                        labelCol={{span: 24}}
-                        name="subTitle"
-                        rules={[{ required: true, message: 'Please input subTitle!' }]}
-                    >
-                        <Input />
-                    </Form.Item>
-                    <div className="d-flex justify-content-end">
-                        <Button type="ghost" role="button" onClick={() => handleCancel()}>
-                            Cancel
-                        </Button>
-                        <Button loading={loading} type="ghost" style={{marginLeft: '10px'}} htmlType="submit">
-                            Save
-                        </Button>
-                    </div>
-                </Form>
+                        <Form.Item
+                            label="Title"
+                            labelCol={{span: 24}}
+                            name="title"
+                            rules={[{ required: true, message: 'Please input title!' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+                        <Form.Item
+                            label="Sub Title"
+                            labelCol={{span: 24}}
+                            name="subTitle"
+                            rules={[{ required: true, message: 'Please input subTitle!' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+                        <div className="d-flex justify-content-end">
+                            <Button type="ghost" role="button" onClick={() => handleCancel()}>
+                                Cancel
+                            </Button>
+                            <Button loading={loading} type="ghost" style={{marginLeft: '10px'}} htmlType="submit">
+                                Save
+                            </Button>
+                        </div>
+                    </Form>
+                )}
             </Modal>
             <Drawer title="Images" size="large" placement="right" onClose={() => setIsDrawerVisible(false)} visible={isDrawerVisible}>
                 <div>
