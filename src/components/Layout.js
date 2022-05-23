@@ -61,7 +61,7 @@ function LayoutComp(props) {
                             </Menu.Item>
                         ))}
                         <Menu.Item className="bg-success"  key={"web-site-link"} icon={<RightCircleOutlined />}>
-                            <a href="https://heyday.teksenbilisim.com" target="_blank">Go Website</a>
+                            <a href="https://heydayinteriors.com/" target="_blank">Go Website</a>
                         </Menu.Item>
                     </Menu>
                 </Sider>

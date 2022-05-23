@@ -131,9 +131,8 @@ class OptionsPage extends React.Component {
                     <div className="col-lg-6 col-md-6">
                             <Card title="Logo" cover={<img alt="example" src={this.state.currentLogo} />}>
                                 <div className="mb-3">
-                                    <label>Upload New Logo</label>
+                                    <label>Upload New Logo (400px x 107px)</label>
                                     <Alert className="my-2" showIcon type="info" message="Please Upload new image and after click 'Save Logo' button" />
-                                    <ImgCrop aspect={423/107}>
                                         <Upload
                                             name="avatar"
                                             listType="picture-card"
@@ -142,11 +141,9 @@ class OptionsPage extends React.Component {
                                             beforeUpload={beforeUpload}
                                             onChange={this.handleChange}
                                             customRequest={this.uploadFiles}
-
                                         >
                                             {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
                                         </Upload>
-                                    </ImgCrop>
                                 </div>
                                 <div>
                                     <Button loading={this.state.loading} type="primary" onClick={this.saveLogo}>Save Logo</Button>
