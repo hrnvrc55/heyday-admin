@@ -96,6 +96,7 @@ export default function AboutPage(){
                             initialValues={{
                                 title: general?.title || '',
                                 description: general?.description || '',
+                                descriptionTr: general?.descriptionTr || '',
                                 companyName: general?.companyName || '',
                                 address: general?.address || '',
                                 locationLink: general?.locationLink || '',
@@ -120,6 +121,14 @@ export default function AboutPage(){
                                 label="Description"
                                 labelCol={{span: 24}}
                                 rules={[{ required: true, message: 'Please input description!' }]}
+                            >
+                                <TextEditor />
+                            </Form.Item>
+                            <Form.Item
+                                name="descriptionTr"
+                                label="Description(Turkish)"
+                                labelCol={{span: 24}}
+                                rules={[{ required: true, message: 'Please input tr description!' }]}
                             >
                                 <TextEditor />
                             </Form.Item>
@@ -213,6 +222,7 @@ export default function AboutPage(){
                             name="basic"
                             initialValues={{
                                 name: owner?.name || '',
+                                descriptionTr: owner?.descriptionTr || '',
                                 description: owner?.description || '',
                                 image: ' '
                             }}
@@ -255,7 +265,14 @@ export default function AboutPage(){
                             >
                                 <TextEditor />
                             </Form.Item>
-
+                            <Form.Item
+                                name="descriptionTr"
+                                label="Description(Turkish)"
+                                labelCol={{span: 24}}
+                                rules={[{ required: true, message: 'Please input tr description!' }]}
+                            >
+                                <TextEditor />
+                            </Form.Item>
                             <Form.Item>
                                 <div className="d-flex justify-content-end">
                                     <Button loading={loading} type="primary" htmlType="submit">

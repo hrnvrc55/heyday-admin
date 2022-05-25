@@ -21,6 +21,7 @@ import axios from "axios";
 import ImgCrop from 'antd-img-crop';
 
 import { v4 as uuidv4 } from 'uuid';
+import TextEditor from "../components/TextEditor";
 
 const { Dragger } = Upload;
 
@@ -53,7 +54,14 @@ export default function WorksPage(){
                     <Button className="m-lg-2 btn-success" type="default" onClick={() => {
                         setIsModalVisible(true);
                         setSelectedWork(record);
-                        form.setFieldsValue({title: record.title, subTitle: record.subTitle})
+                        form.setFieldsValue({
+                            title: record.title,
+                            subTitle: record.subTitle,
+                            titleTr: record.titleTr,
+                            subTitleTr: record.subTitleTr,
+                            description: record.description,
+                            descriptionTr: record.descriptionTr
+                        })
                     }}  icon={<EditOutlined />} />
 
                     <Popconfirm
@@ -219,10 +227,20 @@ export default function WorksPage(){
         <LayoutComp>
             <div className="d-flex justify-content-between">
                 <h2>Works</h2>
-                <Button onClick={() => setIsModalVisible(true)} icon={<PlusCircleOutlined />}>Add Work</Button>
+                <Button onClick={() => {
+                    setIsModalVisible(true)
+                    form.setFieldsValue({
+                        title: '',
+                        subTitle: '',
+                        titleTr: '',
+                        subTitleTr: '',
+                        description: '',
+                        descriptionTr: ''
+                    })
+                }} icon={<PlusCircleOutlined />}>Add Work</Button>
             </div>
             <Table rowKey="id" loading={loading} columns={columns} dataSource={works} />
-            <Modal title="New Work" visible={isModalVisible} footer={false} onCancel={() => {
+            <Modal title="New Work" width={700} visible={isModalVisible} footer={false} onCancel={() => {
                 handleCancel();
                 setSelectedWork({});
             }}>
@@ -247,12 +265,44 @@ export default function WorksPage(){
                             <Input />
                         </Form.Item>
                         <Form.Item
+                            label="Title(Turkish)"
+                            labelCol={{span: 24}}
+                            name="titleTr"
+                            rules={[{ required: true, message: 'Please input title!' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+                        <Form.Item
                             label="Sub Title"
                             labelCol={{span: 24}}
                             name="subTitle"
                             rules={[{ required: true, message: 'Please input subTitle!' }]}
                         >
                             <Input />
+                        </Form.Item>
+                        <Form.Item
+                            label="Sub Title(Turkish)"
+                            labelCol={{span: 24}}
+                            name="subTitleTr"
+                            rules={[{ required: true, message: 'Please input subTitle!' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+                        <Form.Item
+                            name="description"
+                            label="Description"
+                            labelCol={{span: 24}}
+                            rules={[{ required: true, message: 'Please input description!' }]}
+                        >
+                            <TextEditor />
+                        </Form.Item>
+                        <Form.Item
+                            name="descriptionTr"
+                            label="Description(Turkish)"
+                            labelCol={{span: 24}}
+                            rules={[{ required: true, message: 'Please input tr description!' }]}
+                        >
+                            <TextEditor />
                         </Form.Item>
                         <div className="d-flex justify-content-end">
                             <Button type="ghost" role="button" onClick={() => handleCancel()}>

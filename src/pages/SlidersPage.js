@@ -221,8 +221,16 @@ export default function SlidersPage(){
                          <Input value={form.title} name="title" onChange={(e) => {onChangeInput(e.target.name, e.target.value)}} />
                      </div>
                      <div className="mb-3">
+                         <label>Title(Turkish)</label>
+                         <Input value={form.titleTr} name="titleTr" onChange={(e) => {onChangeInput(e.target.name, e.target.value)}} />
+                     </div>
+                     <div className="mb-3">
                          <label>Subtitle</label>
                          <Input value={form.subTitle} name="subTitle" onChange={(e) => {onChangeInput(e.target.name, e.target.value)}} />
+                     </div>
+                     <div className="mb-3">
+                         <label>Subtitle(Turkish)</label>
+                         <Input value={form.subTitleTr} name="subTitleTr" onChange={(e) => {onChangeInput(e.target.name, e.target.value)}} />
                      </div>
                      <div className="mb-3">
                          <div>
