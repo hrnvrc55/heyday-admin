@@ -300,6 +300,7 @@ export default function AboutPage(){
                         )}
                     </div>
                 </Panel>
+
             </Collapse>,
         </LayoutComp>
     )

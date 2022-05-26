@@ -32,6 +32,7 @@ function LayoutComp(props) {
                     className="menu-item"
                     role="button"
                     onClick={() => {
+                        console.log('on click');
                         localStorage.removeItem('userData');
                         setUser(null);
                     }}

@@ -1,11 +1,13 @@
 import React from "react";
-import {Upload, message, Button, Input} from 'antd';
+import {Upload, message, Button, Input, Form} from 'antd';
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import LayoutComp from "../components/Layout";
 import ImgCrop from "antd-img-crop";
 import axios from "axios";
 import cogoToast from 'cogo-toast';
 import { Card, Alert } from 'antd';
+import TextEditor from "../components/TextEditor";
+import MetaOptionsCard from "../components/MetaOptionsCard";
 
 
 function getBase64(img, callback) {
@@ -27,14 +29,20 @@ function beforeUpload(file) {
 }
 
 class OptionsPage extends React.Component {
+    constructor(props) {
+        super(props);
+    }
     state = {
         loading: false,
         fileData: null,
         title: '',
         id: null,
         currentLogo: '',
-        isImageChange: false
+        isImageChange: false,
+        metaOptions: null
     };
+
+
 
     componentDidMount() {
         this.load();
@@ -49,6 +57,7 @@ class OptionsPage extends React.Component {
             })
         }).finally(() => this.setState({loading: false}))
     }
+
 
     handleChange = info => {
         getBase64(info.file.originFileObj, imageUrl =>
@@ -105,6 +114,9 @@ class OptionsPage extends React.Component {
     }
 
 
+
+
+
     render() {
         const { loading, imageUrl } = this.state;
         const uploadButton = (
@@ -118,7 +130,7 @@ class OptionsPage extends React.Component {
                 <h2>Options</h2>
                 <div className="row">
                     <div className="col-lg-6 col-md-6">
-                        <Card title="Web Site Info">
+                        <Card title="Web Site Info" className="mb-2">
                             <div className="mb-3">
                                 <label>Web Site Title</label>
                                 <Input value={this.state.title} onChange={(e) => this.setState({title: e.target.value}) } />
@@ -127,6 +139,8 @@ class OptionsPage extends React.Component {
                                 <Button loading={this.state.loading} type="primary" onClick={this.save}>Save</Button>
                             </div>
                         </Card>
+                        <MetaOptionsCard />
+
                     </div>
                     <div className="col-lg-6 col-md-6">
                             <Card title="Logo" cover={<img alt="example" src={this.state.currentLogo} />}>
@@ -149,7 +163,6 @@ class OptionsPage extends React.Component {
                                     <Button loading={this.state.loading} type="primary" onClick={this.saveLogo}>Save Logo</Button>
                                 </div>
                             </Card>
-
 
                     </div>
 
