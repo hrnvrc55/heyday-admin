@@ -41,7 +41,11 @@ export default function WorksPage(){
             dataIndex: 'subTitle',
             key: 'subTitle',
         },
-
+        {
+            title: 'Meta Description',
+            dataIndex: 'metaDescription',
+            key: 'metaDescription',
+        },
         {
             title: 'Action',
             key: 'action',
@@ -60,7 +64,8 @@ export default function WorksPage(){
                             titleTr: record.titleTr,
                             subTitleTr: record.subTitleTr,
                             description: record.description,
-                            descriptionTr: record.descriptionTr
+                            descriptionTr: record.descriptionTr,
+                            metaDescription: record.metaDescription
                         })
                     }}  icon={<EditOutlined />} />
 
@@ -303,6 +308,14 @@ export default function WorksPage(){
                             rules={[{ required: true, message: 'Please input tr description!' }]}
                         >
                             <TextEditor />
+                        </Form.Item>
+                        <Form.Item
+                            label="Meta Description"
+                            labelCol={{span: 24}}
+                            name="metaDescription"
+                            rules={[{ required: true, message: 'Please input subTitle!' }]}
+                        >
+                            <Input />
                         </Form.Item>
                         <div className="d-flex justify-content-end">
                             <Button type="ghost" role="button" onClick={() => handleCancel()}>
