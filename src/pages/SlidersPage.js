@@ -52,7 +52,7 @@ export default function SlidersPage(){
             render: (text, record) => (
                 <>
 
-                    {/*<Button className="m-lg-2 btn-success" type="default"  icon={<EditOutlined />} />*/}
+                    <Button onClick={() => setIsDrawerVisible({id: record.id, show: true})} className="m-lg-2 btn-success" type="default"  icon={<EditOutlined />} />
 
                     <Popconfirm
                         title="Are you sure to delete this row?"
@@ -82,7 +82,15 @@ export default function SlidersPage(){
     },[])
 
     useEffect(() => {
-        setForm({});
+        if(isDrawerVisible && isDrawerVisible.id){
+
+            const foundData = sliders.find(x => x.id === isDrawerVisible.id);
+            console.log(foundData, 'found');
+            setForm(foundData)
+            setImageUrl(foundData.image)
+        }else{
+            setForm({});
+        }
     },[isDrawerVisible])
 
     const getSliders = async () => {
@@ -149,7 +157,7 @@ export default function SlidersPage(){
 
     const save = async () => {
 
-        if(!fileData){
+        if(!fileData && !isDrawerVisible.id){
             cogoToast.error('Image is required');
             return;
         }
@@ -161,21 +169,57 @@ export default function SlidersPage(){
             cogoToast.error('Subtitle is required');
             return;
         }
-        setLoading(true);
-        let formData = new FormData();
-        formData.append('blob',fileData, "new-image");
-        await axios.post('/slider/upload-image', formData).then(resp => {
-            console.log(resp.data.result);
-            let newForm = form;
-            newForm.image = resp.data.result;
-            setLoading(true);
-            axios.post('/slider/save',newForm).then(resp => {
-                cogoToast.success('Slider is saved')
-                setIsDrawerVisible({show:false, id:null});
-                getSliders();
-            }).finally(() => {setLoading(false)})
+        if(isDrawerVisible.id){
+            if(!fileData){
+                setLoading(true);
+                let newForm = {
+                    WorkId: form.WorkId,
+                    id: isDrawerVisible.id,
+                    subTitle: form.subTitle,
+                    subTitleTr: form.subTitleTr,
+                    title: form.title,
+                    titleTr: form.titleTr,
+                };
+                axios.put('/slider/update/' + isDrawerVisible.id,newForm).then(resp => {
+                    cogoToast.success('Slider is saved')
+                    setIsDrawerVisible({show:false, id:null});
+                    getSliders();
+                }).finally(() => {setLoading(false)})
+            }else{
+                setLoading(true);
+                let formData = new FormData();
+                formData.append('blob',fileData, "new-image");
+                await axios.post('/slider/upload-image', formData).then(resp => {
+                    console.log(resp.data.result);
+                    let newForm = form;
+                    newForm.image = resp.data.result;
+                    setLoading(true);
+                    axios.put('/slider/update/' + isDrawerVisible.id,newForm).then(resp => {
+                        cogoToast.success('Slider is saved')
+                        setIsDrawerVisible({show:false, id:null});
+                        getSliders();
+                    }).finally(() => {setLoading(false)})
 
-        }).finally(() => setLoading(false));
+                }).finally(() => setLoading(false));
+            }
+        }else{
+            setLoading(true);
+            let formData = new FormData();
+            formData.append('blob',fileData, "new-image");
+            await axios.post('/slider/upload-image', formData).then(resp => {
+                console.log(resp.data.result);
+                let newForm = form;
+                newForm.image = resp.data.result;
+                setLoading(true);
+                axios.post('/slider/save',newForm).then(resp => {
+                    cogoToast.success('Slider is saved')
+                    setIsDrawerVisible({show:false, id:null});
+                    getSliders();
+                }).finally(() => {setLoading(false)})
+
+            }).finally(() => setLoading(false));
+        }
+
     }
 
     function onChangeSelect(value) {
@@ -198,9 +242,6 @@ export default function SlidersPage(){
             </div>
             <Table rowKey="id" loading={loading} columns={columns} dataSource={sliders} />
             <Drawer title="Images" size="large" placement="right" onClose={() => setIsDrawerVisible({id: null, show: false})} visible={isDrawerVisible.show}>
-                {isDrawerVisible.id ? (
-                  <div>düzenlenecek</div>
-                ) : (
                  <div>
                      <ImgCrop quality={1} aspect={1600/1130}>
                          <Upload
@@ -244,6 +285,7 @@ export default function SlidersPage(){
                              onChange={onChangeSelect}
                              onSearch={onSearchSelect}
                              style={{width: '100%'}}
+                             value={form.WorkId}
                              filterOption={(input, option) =>
                                  option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
                              }
@@ -258,7 +300,6 @@ export default function SlidersPage(){
                      </div>
 
                  </div>
-                )}
             </Drawer>
 
         </LayoutComp>
