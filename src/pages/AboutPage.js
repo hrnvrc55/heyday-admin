@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import LayoutComp from "../components/Layout";
 import { Collapse, Form, Button, Input, Upload, Tooltip, DatePicker } from 'antd';
-import {PlusCircleOutlined, DeleteOutlined} from '@ant-design/icons';
+import {PlusCircleOutlined, DeleteOutlined, InstagramOutlined,FacebookOutlined,LinkedinOutlined} from '@ant-design/icons';
 import 'react-quill/dist/quill.snow.css';
 import TextEditor from "../components/TextEditor";
 import axios from 'axios';
@@ -204,7 +204,27 @@ export default function AboutPage(){
                             >
                                 <Input />
                             </Form.Item>
-
+                            <Form.Item
+                                label="İnstagram"
+                                labelCol={{span: 24}}
+                                name="instagram"
+                            >
+                                <Input addonBefore={<InstagramOutlined />} />
+                            </Form.Item>
+                            <Form.Item
+                                label="Facebook"
+                                labelCol={{span: 24}}
+                                name="facebook"
+                            >
+                                <Input addonBefore={<FacebookOutlined />} />
+                            </Form.Item>
+                            <Form.Item
+                                label="Linkedin"
+                                labelCol={{span: 24}}
+                                name="linkedin"
+                            >
+                                <Input addonBefore={<LinkedinOutlined />} />
+                            </Form.Item>
                             <Form.Item>
                                 <div className="d-flex justify-content-end">
                                     <Button loading={loading} type="primary" htmlType="submit">

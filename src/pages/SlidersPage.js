@@ -202,7 +202,7 @@ export default function SlidersPage(){
                   <div>düzenlenecek</div>
                 ) : (
                  <div>
-                     <ImgCrop aspect={1600/1130}>
+                     <ImgCrop quality={1} aspect={1600/1130}>
                          <Upload
                              name="avatar"
                              listType="picture-card"
