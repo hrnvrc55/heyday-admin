@@ -39,7 +39,8 @@ class OptionsPage extends React.Component {
         id: null,
         currentLogo: '',
         isImageChange: false,
-        metaOptions: null
+        metaOptions: null,
+        pinterestCode: null
     };
 
 
@@ -116,7 +117,6 @@ class OptionsPage extends React.Component {
 
 
 
-
     render() {
         const { loading, imageUrl } = this.state;
         const uploadButton = (
@@ -143,7 +143,7 @@ class OptionsPage extends React.Component {
 
                     </div>
                     <div className="col-lg-6 col-md-6">
-                            <Card title="Logo" cover={<img alt="example" src={this.state.currentLogo} />}>
+                            <Card title="Logo" className="mb-3" cover={<img alt="example" src={this.state.currentLogo} />}>
                                 <div className="mb-3">
                                     <label>Upload New Logo (400px x 107px)</label>
                                     <Alert className="my-2" showIcon type="info" message="Please Upload new image and after click 'Save Logo' button" />
@@ -163,7 +163,6 @@ class OptionsPage extends React.Component {
                                     <Button loading={this.state.loading} type="primary" onClick={this.saveLogo}>Save Logo</Button>
                                 </div>
                             </Card>
-
                     </div>
 
                 </div>

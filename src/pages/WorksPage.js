@@ -270,7 +270,7 @@ export default function WorksPage(){
                             <Input />
                         </Form.Item>
                         <Form.Item
-                            label="Title(Turkish)"
+                            label="Title(German)"
                             labelCol={{span: 24}}
                             name="titleTr"
                             rules={[{ required: true, message: 'Please input title!' }]}
@@ -286,7 +286,7 @@ export default function WorksPage(){
                             <Input />
                         </Form.Item>
                         <Form.Item
-                            label="Sub Title(Turkish)"
+                            label="Sub Title(German)"
                             labelCol={{span: 24}}
                             name="subTitleTr"
                             rules={[{ required: true, message: 'Please input subTitle!' }]}
@@ -303,7 +303,7 @@ export default function WorksPage(){
                         </Form.Item>
                         <Form.Item
                             name="descriptionTr"
-                            label="Description(Turkish)"
+                            label="Description(German)"
                             labelCol={{span: 24}}
                             rules={[{ required: true, message: 'Please input tr description!' }]}
                         >

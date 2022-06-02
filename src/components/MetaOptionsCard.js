@@ -38,7 +38,8 @@ export default function MetaOptionsCard(){
                 initialValues={{
                     mainMetaDescription: metaOptions ? metaOptions.mainMetaDescription : '',
                     aboutMetaDescription: metaOptions ? metaOptions.aboutMetaDescription : '',
-                    worksMetaDescription: metaOptions ? metaOptions.worksMetaDescription : ''
+                    worksMetaDescription: metaOptions ? metaOptions.worksMetaDescription : '',
+                    pinterestCode: metaOptions ? metaOptions.pinterestCode : '',
                 }}
                 onFinish={save}
                 onFinishFailed={() => {}}
@@ -65,6 +66,14 @@ export default function MetaOptionsCard(){
                     labelCol={{span: 24}}
                     name="worksMetaDescription"
                     rules={[{ required: true, message: 'Please input title!' }]}
+                >
+                    <Input />
+                </Form.Item>
+                <Form.Item
+                    label="Pinterest Code"
+                    labelCol={{span: 24}}
+                    name="pinterestCode"
+                    rules={[{ required: true, message: 'Please input code!' }]}
                 >
                     <Input />
                 </Form.Item>
