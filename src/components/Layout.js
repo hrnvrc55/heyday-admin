@@ -16,9 +16,6 @@ import {ApiContext} from "../provider/ApiProvider";
 
 const { Header, Sider, Content } = Layout;
 
-
-
-
 function LayoutComp(props) {
     const [collapsed, setCollapsed] = useState(false);
     const {setUser,user} = React.useContext(ApiContext);
