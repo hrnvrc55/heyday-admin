@@ -243,7 +243,7 @@ export default function SlidersPage(){
             <Table rowKey="id" loading={loading} columns={columns} dataSource={sliders} />
             <Drawer title="Images" size="large" placement="right" onClose={() => setIsDrawerVisible({id: null, show: false})} visible={isDrawerVisible.show}>
                  <div>
-                     <ImgCrop quality={1} aspect={1600/1130}>
+                     <ImgCrop quality={1} aspect={2048/1024}>
                          <Upload
                              name="avatar"
                              listType="picture-card"
