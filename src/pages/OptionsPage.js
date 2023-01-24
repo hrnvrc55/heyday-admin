@@ -36,6 +36,7 @@ class OptionsPage extends React.Component {
         loading: false,
         fileData: null,
         title: '',
+        loadingText: '',
         id: null,
         currentLogo: '',
         isImageChange: false,
@@ -53,6 +54,7 @@ class OptionsPage extends React.Component {
         await axios.get(`/options/get`).then(resp => {
             this.setState({
                 title: resp.data.result.title,
+                loadingText: resp.data.result.loadingText,                
                 id: resp.data.result.id,
                 currentLogo: resp.data.result.logo
             })
@@ -102,20 +104,19 @@ class OptionsPage extends React.Component {
     }
     save = async  () => {
          let data = {
-             title: this.state.title
+             title: this.state.title,
+             loadingText: this.state.loadingText
          }
          if(this.state.id){
              data.id = this.state.id
          }
+         console.log("loTe",this.state.loadingText);
         this.setState({loading: true})
         await axios.post(`/options/save`,data).then(resp => {
             this.load()
-            cogoToast.success('Title is changed')
+            cogoToast.success('Title/Loading Text is changed')
         }).finally(() => this.setState({loading: false}))
     }
-
-
-
 
     render() {
         const { loading, imageUrl } = this.state;
@@ -134,6 +135,10 @@ class OptionsPage extends React.Component {
                             <div className="mb-3">
                                 <label>Web Site Title</label>
                                 <Input value={this.state.title} onChange={(e) => this.setState({title: e.target.value}) } />
+                            </div>
+                            <div className="mb-3 mt-3">
+                                <label>Loading Text</label>
+                                <Input value={this.state.loadingText} onChange={(e) => this.setState({loadingText: e.target.value}) } />
                             </div>
                             <div>
                                 <Button loading={this.state.loading} type="primary" onClick={this.save}>Save</Button>
