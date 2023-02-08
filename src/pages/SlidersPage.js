@@ -226,7 +226,7 @@ export default function SlidersPage(){
         console.log(`selected ${value}`);
         setForm({
             ...form,
-            workId: value
+            WorkId: value
         })
     }
 
